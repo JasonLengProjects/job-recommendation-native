@@ -1,13 +1,16 @@
 package rpc;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 
+import entity.Item;
 import external.GitHubClient;
 
 
@@ -35,7 +38,12 @@ public class SearchItem extends HttpServlet {
 		double lon = Double.parseDouble(request.getParameter("lon"));
 
 		GitHubClient client = new GitHubClient();
-		RpcHelper.writeJsonArray(response, client.search(lat, lon, null));
+		List<Item> itemList = client.search(lat, lon, null);
+		JSONArray array = new JSONArray();
+		for (Item item : itemList) {
+			array.put(item.toJSONObject());
+		}
+		RpcHelper.writeJsonArray(response, array);
 	}
 
 	/**
