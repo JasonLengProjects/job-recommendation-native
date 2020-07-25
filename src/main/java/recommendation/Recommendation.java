@@ -25,7 +25,7 @@ public class Recommendation {
 		for (String itemId : favoritedItemIds) {
 			Set<String> keywords = connection.getKeywords(itemId);
 			for (String keyword : keywords) {
-				allKeywords.put(keyword, allKeywords.getOrDefault(keywords, 0) + 1);
+				allKeywords.put(keyword, allKeywords.getOrDefault(keyword, 0) + 1);
 			}
 		}
 		connection.close();
